@@ -18,7 +18,6 @@ Tài liệu tham chiếu: `Requirements+Database.docx`, ERD (25 collections).
 7. [API đã triển khai](#7-api-đã-triển-khai)
 8. [Xử lý lỗi thường gặp](#8-xử-lý-lỗi-thường-gặp)
 
-**Chú thích trạng thái API:** ✅ Đã có · 📋 Chưa làm (theo spec)
 
 ---
 
@@ -131,12 +130,12 @@ ParkingManagement_BE/
     │   └── roles.js          # admin | manager | staff | user
     │
     ├── models/               # Mongoose schema ↔ collection MongoDB
-    │   ├── User.js           # ✅ users
-    │   ├── Building.js       # ✅ buildings (mở rộng theo ERD)
+    │   ├── User.js           # users
+    │   ├── Building.js       # buildings (mở rộng theo ERD)
     │   └── index.js          # Export tập trung các model
     │
     ├── validators/           # Kiểm tra body/query trước controller
-    │   └── auth.validator.js # ✅ validate register/login
+    │   └── auth.validator.js # validate register/login
     │
     ├── controllers/          # Nhận req/res, gọi service, format response
     │   └── auth.controller.js
@@ -153,10 +152,10 @@ ParkingManagement_BE/
     │   ├── index.js          # Mount /users, /staff, /manager, /admin
     │   ├── user/
     │   │   ├── index.js
-    │   │   └── auth.routes.js    # ✅ /api/users/auth/*
-    │   ├── staff/            # 📋 Ca trực, check-in/out
-    │   ├── manager/          # 📋 Quản lý tòa được giao
-    │   └── admin/            # 📋 Toàn hệ thống
+    │   │   └── auth.routes.js    # /api/users/auth/*
+    │   ├── staff/            # Ca trực, check-in/out
+    │   ├── manager/          # Quản lý tòa được giao
+    │   └── admin/            # Toàn hệ thống
     │
     └── utils/
         ├── AppError.js       # Lỗi có statusCode (400, 401, 404…)
@@ -217,139 +216,86 @@ Header chung (khi cần đăng nhập): `Authorization: Bearer <token>`
 
 | Method | Endpoint | Mô tả | Trạng thái |
 |--------|----------|--------|------------|
-| POST | `/auth/register` | Đăng ký tài khoản | ✅ |
-| POST | `/auth/login` | Đăng nhập, nhận JWT | ✅ |
-| GET | `/auth/me` | Thông tin user hiện tại | ✅ |
-| PATCH | `/profile` | Cập nhật họ tên, phone, avatar | 📋 |
-| GET | `/wallet` | Số dư ví | 📋 |
-| GET | `/wallet/transactions` | Lịch sử giao dịch ví | 📋 |
-| POST | `/wallet/top-up` | Nạp tiền ví | 📋 |
-| GET | `/buildings` | Danh sách bãi đang hoạt động | 📋 |
-| GET | `/buildings/:id` | Chi tiết bãi | 📋 |
-| GET | `/buildings/:id/floors` | Tầng + loại xe | 📋 |
-| GET | `/buildings/:id/slots` | Tra cứu ô trống | 📋 |
-| GET | `/buildings/:id/feedbacks` | Đánh giá bãi | 📋 |
-| POST | `/buildings/:id/feedbacks` | Gửi đánh giá | 📋 |
-| POST | `/reservations` | Đặt chỗ trước (theo policy) | 📋 |
-| GET | `/reservations` | Danh sách đặt chỗ của tôi | 📋 |
-| GET | `/reservations/:id` | Chi tiết đặt chỗ | 📋 |
-| PATCH | `/reservations/:id/cancel` | Hủy đặt chỗ | 📋 |
-| GET | `/parking-sessions` | Lịch sử gửi xe | 📋 |
-| GET | `/parking-sessions/:id` | Chi tiết phiên + phí | 📋 |
-| GET | `/packages` | Gói vé dài hạn (lọc building) | 📋 |
-| POST | `/subscriptions` | Mua gói dài hạn | 📋 |
-| GET | `/subscriptions` | Gói đã mua | 📋 |
-| GET | `/memberships` | Tư cách thành viên hiện tại | 📋 |
-| GET | `/payments` | Lịch sử thanh toán | 📋 |
-| POST | `/payments` | Thanh toán phiên / gói | 📋 |
-| GET | `/notifications` | Thông báo | 📋 |
-| PATCH | `/notifications/:id/read` | Đánh dấu đã đọc | 📋 |
+| POST | `/auth/register` | Đăng ký tài khoản 
+| POST | `/auth/login` | Đăng nhập, nhận JWT 
+| GET | `/auth/me` | Thông tin user hiện tại 
+| PATCH | `/profile` | Cập nhật họ tên, phone, avatar 
+| GET | `/wallet` | Số dư ví 
+| GET | `/wallet/transactions` | Lịch sử giao dịch ví 
+| POST | `/wallet/top-up` | Nạp tiền ví 
+| GET | `/buildings` | Danh sách bãi đang hoạt động
+| GET | `/buildings/:id` | Chi tiết bãi 
+| GET | `/buildings/:id/floors` | Tầng + loại xe 
+| GET | `/buildings/:id/slots` | Tra cứu ô trống 
+| GET | `/buildings/:id/feedbacks` | Đánh giá bãi 
+| POST | `/buildings/:id/feedbacks` | Gửi đánh giá 
+| POST | `/reservations` | Đặt chỗ trước (theo policy) 
+| GET | `/reservations` | Danh sách đặt chỗ của tôi 
+| GET | `/reservations/:id` | Chi tiết đặt chỗ 
+| PATCH | `/reservations/:id/cancel` | Hủy đặt chỗ 
+| GET | `/parking-sessions` | Lịch sử gửi xe 
+| GET | `/parking-sessions/:id` | Chi tiết phiên + phí 
+| GET | `/packages` | Gói vé dài hạn (lọc building) 
+| POST | `/subscriptions` | Mua gói dài hạn 
+| GET | `/subscriptions` | Gói đã mua
+| GET | `/memberships` | Tư cách thành viên hiện tại 
+| GET | `/payments` | Lịch sử thanh toán 
+| POST | `/payments` | Thanh toán phiên / gói 
+| GET | `/notifications` | Thông báo 
+| PATCH | `/notifications/:id/read` | Đánh dấu đã đọc
 
 ### 6.2 Staff (`/api/staff`) — Nhân viên bãi
 
 | Method | Endpoint | Mô tả | Trạng thái |
 |--------|----------|--------|------------|
-| GET | `/shifts/today` | Ca trực hôm nay | 📋 |
-| GET | `/buildings/:buildingId/slots` | Trạng thái ô xe | 📋 |
-| PATCH | `/slots/:id/status` | Cập nhật trạng thái ô | 📋 |
-| POST | `/parking-sessions/check-in` | Ghi nhận xe vào | 📋 |
-| PATCH | `/parking-sessions/:id/check-out` | Ghi nhận xe ra + tính phí | 📋 |
-| GET | `/parking-sessions/active` | Phiên đang trong bãi | 📋 |
-| POST | `/shift-revenues` | Chốt doanh thu ca | 📋 |
+| GET | `/shifts/today` | Ca trực hôm nay 
+| GET | `/buildings/:buildingId/slots` | Trạng thái ô xe 
+| PATCH | `/slots/:id/status` | Cập nhật trạng thái ô 
+| POST | `/parking-sessions/check-in` | Ghi nhận xe vào 
+| PATCH | `/parking-sessions/:id/check-out` | Ghi nhận xe ra + tính phí 
+| GET | `/parking-sessions/active` | Phiên đang trong bãi 
+| POST | `/shift-revenues` | Chốt doanh thu ca 
 
 ### 6.3 Manager (`/api/manager`) — Quản lý tòa
 
 | Method | Endpoint | Mô tả | Trạng thái |
 |--------|----------|--------|------------|
-| GET | `/buildings` | Các tòa được gán (`building_managers`) | 📋 |
-| PATCH | `/buildings/:id` | Sửa giờ mở cửa, trạng thái | 📋 |
-| CRUD | `/buildings/:id/floors` | Quản lý tầng | 📋 |
-| CRUD | `/floors/:floorId/slots` | Quản lý ô xe | 📋 |
-| CRUD | `/buildings/:id/gates` | Cổng ra vào | 📋 |
-| CRUD | `/buildings/:id/shifts` | Định nghĩa ca trực | 📋 |
-| GET/POST | `/staff-shifts` | Phân ca nhân viên | 📋 |
-| CRUD | `/packages` | Gói vé dài hạn | 📋 |
-| CRUD | `/reservation-policies` | Chính sách đặt chỗ | 📋 |
-| POST | `/reservation-policies/:id/push` | Đẩy policy (`policy_push_logs`) | 📋 |
-| GET | `/revenue` | Doanh thu / `shift_revenues` | 📋 |
-| GET | `/subscriptions` | Gói đã bán trong tòa | 📋 |
-| GET | `/feedbacks` | Phản hồi khách | 📋 |
+| GET | `/buildings` | Các tòa được gán (`building_managers`) 
+| PATCH | `/buildings/:id` | Sửa giờ mở cửa, trạng thái 
+| CRUD | `/buildings/:id/floors` | Quản lý tầng 
+| CRUD | `/floors/:floorId/slots` | Quản lý ô xe 
+| CRUD | `/buildings/:id/gates` | Cổng ra vào 
+| CRUD | `/buildings/:id/shifts` | Định nghĩa ca trực 
+| GET/POST | `/staff-shifts` | Phân ca nhân viên 
+| CRUD | `/packages` | Gói vé dài hạn 
+| CRUD | `/reservation-policies` | Chính sách đặt chỗ 
+| POST | `/reservation-policies/:id/push` | Đẩy policy (`policy_push_logs`) 
+| GET | `/revenue` | Doanh thu / `shift_revenues` 
+| GET | `/subscriptions` | Gói đã bán trong tòa 
+| GET | `/feedbacks` | Phản hồi khách 
 
 ### 6.4 Admin (`/api/admin`) — Quản trị hệ thống
 
 | Method | Endpoint | Mô tả | Trạng thái |
 |--------|----------|--------|------------|
-| CRUD | `/users` | Quản lý mọi role | 📋 |
-| PATCH | `/users/:id/status` | Khóa / mở tài khoản | 📋 |
-| CRUD | `/buildings` | Toàn bộ tòa nhà | 📋 |
-| CRUD | `/vehicle-types` | Loại phương tiện | 📋 |
-| POST | `/building-managers` | Gán manager ↔ building | 📋 |
-| GET | `/system-wallet` | Ví hệ thống | 📋 |
-| GET | `/revenue-distributions` | Phân bổ doanh thu | 📋 |
-| POST | `/revenue-distributions` | Tạo phân bổ | 📋 |
-| GET | `/audit-logs` | Nhật ký (`audit_logs`) | 📋 |
-| GET | `/payments` | Tra cứu thanh toán toàn hệ thống | 📋 |
+| CRUD | `/users` | Quản lý mọi role 
+| PATCH | `/users/:id/status` | Khóa / mở tài khoản 
+| CRUD | `/buildings` | Toàn bộ tòa nhà 
+| CRUD | `/vehicle-types` | Loại phương tiện 
+| POST | `/building-managers` | Gán manager ↔ building 
+| GET | `/system-wallet` | Ví hệ thống 
+| GET | `/revenue-distributions` | Phân bổ doanh thu 
+| POST | `/revenue-distributions` | Tạo phân bổ 
+| GET | `/audit-logs` | Nhật ký (`audit_logs`) 
+| GET | `/payments` | Tra cứu thanh toán toàn hệ thống 
 
-### 6.5 Gốc (không qua `/api`)
 
-| Method | Endpoint | Mô tả | Trạng thái |
-|--------|----------|--------|------------|
-| GET | `/` | Xác nhận API đang chạy | ✅ |
 
-> **Đã bỏ `/health`:** trùng chức năng với `GET /`, không cần endpoint riêng cho monitoring lúc dev.
 
 ---
 
-## 7. API đã triển khai
 
-### `POST /api/users/auth/register`
-
-```json
-{
-  "email": "user@example.com",
-  "password": "123456",
-  "fullName": "Nguyen Van A",
-  "phone": "0901234567"
-}
-```
-
-| Field | Bắt buộc |
-|-------|----------|
-| email | Có |
-| password | Có (≥ 6 ký tự) |
-| fullName | Có |
-| phone | Không |
-
-Response `201`: `{ success, message, data: { token, user } }` — role luôn là `user`.
-
-### `POST /api/users/auth/login`
-
-```json
-{ "email": "user@example.com", "password": "123456" }
-```
-
-Response `200`: `{ success, message, data: { token, user } }`.
-
-### `GET /api/users/auth/me`
-
-Header: `Authorization: Bearer <token>`
-
-Response `200`: `{ success, data: { user } }`.
-
-### Test PowerShell
-
-```powershell
-$base = "http://localhost:5000"   # đổi port theo log terminal
-
-Invoke-RestMethod -Uri "$base/api/users/auth/login" `
-  -Method POST `
-  -Body '{"email":"user@example.com","password":"123456"}' `
-  -ContentType "application/json"
-```
-
----
-
-## 8. Xử lý lỗi thường gặp
+## 7. Xử lý lỗi thường gặp
 
 ### Port 5000 đang bận
 
@@ -371,6 +317,3 @@ Missing env: mongodbUri, jwtSecret
 
 ---
 
-## Review & liên hệ
-
-Mọi thay đổi vào `main` qua **Pull Request** — ghi rõ module API trong mô tả PR để reviewer test đúng endpoint.
